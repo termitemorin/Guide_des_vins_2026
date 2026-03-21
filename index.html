@@ -281,17 +281,67 @@ footer .anchor-small{margin-top:1rem;opacity:.1;}
 }
 
 @media print{
-  body{background:#fff;color:#222;}
-  .wine-card-container{height:auto;perspective:none;}
-  .wine-card-inner{transform:none!important;transform-style:flat;position:static;}
-  .wine-card-front{display:none;}
-  .wine-card-back{position:static;transform:none;border:1px solid #ccc;background:#fafafa;break-inside:avoid;}
-  nav{display:none;}
-  .hero{min-height:auto;padding:2rem;background:#fff;}
-  .wine-card-back .wine-name,.hero h1{color:#111;}
-  .wine-card-back .origin{color:#8b6914;}
-  .wine-card-back .funfact{background:#f5f5f5;border-left-color:#8b6914;}
-  .wine-card-back .back-hint{display:none;}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  body{background:#fff!important;color:#222!important;font-size:11pt;}
+  nav,.hero svg,.anchor,.front-hint,.back-hint,.quiz-btn,.quiz-overlay,.flip-check{display:none!important;}
+
+  /* Hero compact */
+  .hero{min-height:auto!important;padding:1.5rem 1rem!important;background:#fff!important;page-break-after:avoid;}
+  .hero h1{color:#111!important;font-size:2rem!important;}
+  .hero h1 em{color:#8b6914!important;}
+  .hero .sub,.hero .year{color:#555!important;border-color:#999!important;}
+
+  /* Sections */
+  .formation,.formation h2,section,.section-head h2{color:#111!important;}
+  .formation h2 em,.section-head h2 em{color:#8b6914!important;}
+  .formation .section-sub,.section-head .count{color:#666!important;}
+  .formation .section-sub::after,.section-head::after{background:#8b6914!important;}
+
+  /* Vocab & pastille cards */
+  .vocab-card{background:#fafafa!important;border:1px solid #ddd!important;break-inside:avoid;}
+  .vocab-card h3{color:#8b6914!important;}
+  .vocab-card p{color:#333!important;}
+  .vocab-card .example{color:#666!important;border-top-color:#ddd!important;}
+  .pastille-row{background:#fafafa!important;border:1px solid #ddd!important;break-inside:avoid;}
+  .pastille-row .p-name{color:#222!important;}
+  .pastille-row .p-desc{color:#333!important;}
+
+  /* Cépages cards */
+  .cepage-grid .vocab-card{background:#fafafa!important;}
+
+  /* Wine cards — show only back, no flip */
+  .wine-card-container{height:auto!important;perspective:none!important;-webkit-perspective:none!important;cursor:default!important;break-inside:avoid;margin-bottom:.5rem;}
+  .wine-card-inner{transform:none!important;-webkit-transform:none!important;transform-style:flat!important;-webkit-transform-style:flat!important;position:static!important;height:auto!important;}
+  .wine-card-front{display:none!important;}
+  .wine-card-back{position:static!important;transform:none!important;-webkit-transform:none!important;
+    backface-visibility:visible!important;-webkit-backface-visibility:visible!important;
+    border:1px solid #ddd!important;background:#fafafa!important;overflow:visible!important;height:auto!important;padding:1rem!important;}
+
+  /* Back card text colors */
+  .wine-card-back .wine-name{color:#111!important;font-size:.95rem!important;}
+  .wine-card-back .producer{color:#666!important;}
+  .wine-card-back .origin{color:#8b6914!important;}
+  .wine-card-back .cepage{color:#333!important;opacity:1!important;}
+  .wine-card-back .price{color:#8b6914!important;border-color:#ccc!important;background:#fff!important;}
+  .wine-card-back .detail-label{color:#666!important;}
+  .wine-card-back .detail-val{color:#222!important;}
+  .wine-card-back .funfact{background:#f0ede5!important;border-left-color:#8b6914!important;color:#333!important;}
+  .wine-card-back .saq-link{color:#8b6914!important;border-color:#ccc!important;}
+  .wine-card-back .commentaire{color:#555!important;border-left-color:#8b6914!important;background:#f5f2ea!important;}
+  .badge.rouge-badge{color:#8b1a2b!important;border-color:#8b1a2b!important;background:rgba(139,26,43,.08)!important;}
+  .badge.blanc-badge{color:#8b6914!important;border-color:#8b6914!important;background:rgba(139,105,20,.08)!important;}
+  .badge.bulles-badge{color:#8b6914!important;border-color:#8b6914!important;background:rgba(139,105,20,.08)!important;}
+  .badge.bio{color:#3a7a3a!important;border-color:#3a7a3a!important;background:rgba(58,122,58,.08)!important;}
+  .pastille{border-color:#ddd!important;color:#333!important;}
+  .back-thumb img{filter:none!important;}
+
+  /* Grid for print */
+  .wine-grid{grid-template-columns:repeat(2,1fr)!important;gap:.8rem!important;}
+
+  /* Footer */
+  footer{border-top-color:#ddd!important;}
+  footer p{color:#666!important;}
+  footer a{color:#8b6914!important;}
 }
 </style>
 </head>
