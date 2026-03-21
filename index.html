@@ -1876,6 +1876,62 @@ function closeQuiz() {
 function renderQuestion() {
   var s = quizState;
   if (s.current >= s.questions.length) { renderResult(); return; }
+  var q = s.questions[s.current];
+  var pct = (s.current / s.questions.length * 100).toFixed(0);
+  var html = '<div class="quiz-progress">Question ' + (s.current + 1) + ' / ' + s.questions.length + '</div>';
+  html += '<div class="quiz-bar"><div class="quiz-bar-fill" style="width:' + pct + '%"></div></div>';
+  html += '<div class="quiz-question">' + q.q + '</div>';
+  html += '<div class="quiz-options">';
+  for (var i = 0; i < q.answers.length; i++) {
+    html += '<button class="quiz-opt" onclick="selectAnswer(this,' + i + ',' + (q.answers[i].isCorrect ? 'true' : 'false') + ')">' + q.answers[i].text + '</button>';
+  }
+  html += '</div>';
+  html += '<button class="quiz-next" id="quiz-next" onclick="nextQuestion()">Suivante →</button>';
+  document.getElementById('quiz-content').innerHTML = html;
+  s.answered = false;
+}
+
+function selectAnswer(btn, idx, isCorrect) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+  var opts = document.querySelectorAll('.quiz-opt');
+  for (var i = 0; i < opts.length; i++) {
+    opts[i].classList.add('disabled');
+    if (quizState.questions[quizState.current].answers[i].isCorrect) {
+      opts[i].classList.add(i === idx ? 'correct' : 'reveal');
+    }
+  }
+  if (isCorrect) {
+    btn.classList.add('correct');
+    quizState.score++;
+  } else {
+    btn.classList.add('wrong');
+  }
+  document.getElementById('quiz-next').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  quizState.current++;
+  renderQuestion();
+}
+
+function renderResult() {
+  var s = quizState;
+  var pct = Math.round(s.score / s.questions.length * 100);
+  var msg = pct === 100 ? 'Parfait! Tu es un vrai sommelier!' :
+            pct >= 80 ? 'Excellent! Tu connais bien ta carte!' :
+            pct >= 60 ? 'Pas mal! Encore un peu de révision.' :
+            pct >= 40 ? 'Continue à explorer le guide!' :
+            'Commence par lire les fiches des vins!';
+  var html = '<div class="quiz-result">';
+  html += '<div class="quiz-score">' + s.score + '/' + s.questions.length + '</div>';
+  html += '<div class="quiz-score-label">' + pct + '% de bonnes réponses</div>';
+  html += '<div class="quiz-msg">' + msg + '</div>';
+  html += '<button class="quiz-restart" onclick="startQuiz()">Rejouer</button>';
+  html += ' <button class="quiz-restart" onclick="closeQuiz()">Fermer</button>';
+  html += '</div>';
+  document.getElementById('quiz-content').innerHTML = html;
+}
 </script>
 </body>
 </html>
